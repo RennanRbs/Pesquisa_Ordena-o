@@ -2,41 +2,34 @@
 
 import time
 import random
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 tempos = []
+
+
 def geraVetor(tam):
-    vetor = list(range(tam,0,-1))
+    vetor = list(range(tam, 0, -1))
+    random.shuffle(vetor)
     return vetor
 
 
-def shellSort(arr):
-    # Start with a big gap, then reduce the gap
-    n = len(arr)
-    gap = n / 2
+def shell_sort(vetor):
+    antes = time.time()
+    tamanho = len(vetor)
+    intervalo = tamanho // 2
 
-    # Do a gapped insertion sort for this gap size.
-    # The first gap elements a[0..gap-1] are already in gapped
-    # order keep adding one more element until the entire array
-    # is gap sorted
-    while gap > 0:
-
-        for i in range(gap, n):
-
-            # add a[i] to the elements that have been gap sorted
-            # save a[i] in temp and make a hole at position i
-            temp = arr[i]
-
-            # shift earlier gap-sorted elements up until the correct
-            # location for a[i] is found
+    while intervalo > 0:
+        for i in range(intervalo, tamanho):
+            aux = vetor[i]
             j = i
-            while j >= gap and arr[j - gap] > temp:
-                arr[j] = arr[j - gap]
-                j -= gap
+            while j >= intervalo and vetor[j - intervalo] > aux:
+                vetor[j] = vetor[j - intervalo]
+                j -= intervalo
+            vetor[j] = aux
+        intervalo //= 2
+    depois = time.time()
+    return (depois - antes)
 
-                # put temp (the original a[i]) in its correct location
-            arr[j] = temp
-        gap /= 2
 
 def mergeSort(arr):
     if len(arr) > 1:
@@ -79,20 +72,12 @@ def printList(arr):
 
 
 # driver code to test the above code
-if __name__ == '__main__':
-    numerosDosVetores = [30000,40000,50000,60000,70000,80000]
-    arr = geraVetor(numerosDosVetores)
-    print("Given array is", end="\n")
-    printList(arr)
-    shellSort(arr)
-    print("Sorted array is: ", end="\n")
-    printList(arr)
+    if __name__ == '__main__':
+        tam = [30000, 40000, 50000, 60000, 70000]
 
-    # for i in numerosDosVetores:
-    #         antes = time.time()
-    #         shellSort(geraVetor(i))
-    #         depois = time.time()
-    #         tempos.append(depois - antes)
-    #
-    # plt.plot(numerosDosVetores, tempos)
-    # plt.show()
+        for i in range(len(vetor)):
+            tempo = shell_sort(geraVetor(vetor[i]))
+            tempos.append(tempo)
+
+    plt.plot(vetor, tempos)
+    plt.show()
