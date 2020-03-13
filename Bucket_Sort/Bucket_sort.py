@@ -28,7 +28,7 @@ def bucketSort(array):
             k += 1
     return array
   
-vetor = [1000,10000,30000,60000]
+vetor = [15000,25000,35000,45000,55000]
 
 for i in range(len(vetor)):
   tempo=insertion_sort(geraVetor(vetor[i]))
