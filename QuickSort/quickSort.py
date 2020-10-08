@@ -4,10 +4,6 @@ import random\
 import matplotlib.pyplot as plt\
 tempos=[]\
 \
-def geraVetor(tam):\
-    vetor = list(range(tam,0,-1))\
-    return vetor\
-\
 def particao(vetor, ini, fim):\
     pivo = vetor[fim - 1]\
     for i in range(ini, fim):\
@@ -31,11 +27,20 @@ def escolhe_pivo_aleatorio(vetor, ini, fim):\
   \
 vetor = [100000,200000,300000,400000,500000]\
 \
+ def geraVetor(tam):\
+ vetor = list(range(tam,0,-1))\
+ return vetor\
+\
 for i in vetor:\
   antes=time.time()\
   quick_sort(geraVetor(i),0,i-1)\
   depois=time.time()\
   tempos.append(depois-antes)\
 \
+ def escolhe_pivo_com(vetor, ini, fim):\
+ rand = random.randrange(ini, fim)\
+ vetor[fim - 1], vetor[rand] = vetor[rand], vetor[fim - 1]\
+ return particao(vetor, ini, fim)\
+ \
 plt.plot(vetor,tempos)\
 plt.show()}
